@@ -38,7 +38,7 @@ jobs:
 
       - name: Run app.py
         run: |
-          cd ${{ github.workspace }}
+          cd /home/runner/work/image-segmentation/
           python app.py
 
       - name: 'Deploy to Azure Web App'
