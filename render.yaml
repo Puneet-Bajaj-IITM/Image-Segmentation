@@ -1,14 +1,15 @@
+version: 1
 services:
-- name: star-segmentor
-  buildCommand: |
-    wget https://github.com/Puneet-Bajaj-IITM/image-segmentation/releases/download/v1.0.0/results.zip
-    unzip results.zip
-    pip install -r requirements.txt
-  startCommand: python app.py
-  env:
-  - key: FLASK_APP
-    value: app.py
-  - key: FLASK_RUN_HOST
-    value: 0.0.0.0
-  - key: PYTHON_VERSION
-    value: 3.8
+  - name: star-segmentor
+    buildCommand: |
+      wget https://github.com/Puneet-Bajaj-IITM/image-segmentation/releases/download/v1.0.0/results.zip
+      unzip results.zip
+      pip install -r requirements.txt
+    startCommand: python app.py
+    env:
+      - key: FLASK_APP
+        value: app.py
+      - key: FLASK_RUN_HOST
+        value: 0.0.0.0
+      - key: PYTHON_VERSION
+        value: 3.8
