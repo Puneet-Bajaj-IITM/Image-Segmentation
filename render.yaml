@@ -1,7 +1,7 @@
 version: 1
-type: web
 services:
   - name: star-segmentor
+    type: web
     buildCommand: |
       wget https://github.com/Puneet-Bajaj-IITM/image-segmentation/releases/download/v1.0.0/results.zip
       unzip results.zip
