@@ -40,7 +40,11 @@ jobs:
 
       - name: Run app.py
         run: |
+          cd ${{ github.workspace }} # Change this line to the correct relative path
+          ls  # List files to verify 'app.py' is present
+          chmod +x app.py  # Ensure execute permissions
           python app.py
+
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
