@@ -35,7 +35,6 @@ jobs:
           unzip results.zip -d deployment
 
       - name: Run app.py
-        working-directory: deployment
         run: python app.py
 
       - name: 'Deploy to Azure Web App'
