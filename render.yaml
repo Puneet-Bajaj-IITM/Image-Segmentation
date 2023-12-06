@@ -1,10 +1,19 @@
-version: 1
 services:
-  - name: star-segmentor
-    type: web
+  - type: web
+    name: star-segmentor
+    runtime: python
+    repo: https://github.com/Puneet-Bajaj-IITM/image-segmentation.git
+    envVars:
+      - key: FLASK_APP
+        value: app.py
+      - key: FLASK_RUN_HOST
+        value: 0.0.0.0
     buildCommand: |
       wget https://github.com/Puneet-Bajaj-IITM/image-segmentation/releases/download/v1.0.0/results.zip
       unzip results.zip
       pip install -r requirements.txt
     startCommand: python app.py
-    
+    healthCheckPath: /
+    numInstances: 3
+   
+  
