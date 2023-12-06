@@ -21,6 +21,8 @@ jobs:
 
       - name: Install dependencies
         run: |
+          ls
+          pwd
           pip install -r requirements.txt
 
   deploy:
@@ -38,7 +40,6 @@ jobs:
 
       - name: Run app.py
         run: |
-          cd /home/runner/work/image-segmentation/
           python app.py
 
       - name: 'Deploy to Azure Web App'
