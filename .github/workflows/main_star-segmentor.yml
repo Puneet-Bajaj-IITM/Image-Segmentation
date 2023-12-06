@@ -33,7 +33,7 @@ jobs:
 
       - name: Download and unzip release
         run: |
-          wget https://github.com/Puneet-Bajaj-IITM/image-segmentation/releases/latest/download/results.zip
+          wget https://github.com/Puneet-Bajaj-IITM/image-segmentation/releases/download/results.zip
           unzip -o results.zip -d ${{ github.workspace }}/results
           ls
           pwd
