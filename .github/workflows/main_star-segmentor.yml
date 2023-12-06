@@ -16,16 +16,6 @@ jobs:
 
       # Add your steps for setting up Python, creating a virtual environment, installing dependencies, etc.
 
-      - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
-
-      - name: Upload artifact for deployment jobs
-        uses: actions/upload-artifact@v3
-        with:
-          name: python-app
-          path: release.zip
-          # Additional paths if needed
-          
       - name: Set up Python version
         uses: actions/setup-python@v1
         with:
@@ -39,6 +29,16 @@ jobs:
           pwd
         working-directory: ${{ github.workspace }}
 
+      - name: Zip artifact for deployment
+        run: zip release.zip ./* -r
+
+      - name: Upload artifact for deployment jobs
+        uses: actions/upload-artifact@v3
+        with:
+          name: python-app
+          path: release.zip
+          # Additional paths if needed
+          
       - name: Install dependencies
         run: pip install -r requirements.txt
 
@@ -48,26 +48,28 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
+  
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
         with:
           name: python-app
-
+  
       - name: Unzip artifact for deployment
-        run: unzip release.zip
-        
-     
+        run: |
+          unzip -q python-app/release.zip -d deployment
+          chmod +x deployment/app.py
+        working-directory: ${{ github.workspace }}
+  
       # Additional steps like running model.py, setting permissions, etc.
-
+  
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'Star-Segmentor'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_6A4D988E5AEA4B01BFC476E6E84677AF }}
-          package: .
+          package: deployment
 
 
   run-app:
@@ -75,9 +77,20 @@ jobs:
       - build
       - deploy
     runs-on: ubuntu-latest
-
+  
     steps:
-     
-      - name: Run Python app
-        run: python /home/runner/work/image-segmentation/image-segmentation/star-segmentor/app.py
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+  
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
         working-directory: ${{ github.workspace }}
+  
+      - name: Run Python app
+        run: python deployment/app.py
+        working-directory: ${{ github.workspace }}
+  
