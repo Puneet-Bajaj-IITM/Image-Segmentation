@@ -23,6 +23,8 @@ jobs:
         run: |
           ls
           pwd
+          wget https://github.com/Puneet-Bajaj-IITM/image-segmentation/releases/download/v1.0.0/results.zip
+          unzip -d ${{ github.workspace }}/results results.zip
           pip install -r requirements.txt
 
   deploy:
@@ -33,10 +35,6 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     
     steps:
-      - name: Download results.zip from releases
-        run: |
-          wget https://github.com/Puneet-Bajaj-IITM/image-segmentation/releases/download/v1.0.0/results.zip
-          unzip -d ${{ github.workspace }}/results results.zip
 
       - name: Run app.py
         run: |
