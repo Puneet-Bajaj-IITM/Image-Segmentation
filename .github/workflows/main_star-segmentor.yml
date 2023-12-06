@@ -34,11 +34,11 @@ jobs:
       - name: Download results.zip from releases
         run: |
           wget https://github.com/Puneet-Bajaj-IITM/image-segmentation/releases/download/v1.0.0/results.zip
-          unzip -d $(dirname "${{ github.workspace }}/image-segmentation") results.zip
+          unzip -d ${{ github.workspace }}/results results.zip
 
       - name: Run app.py
         run: |
-          cd $(dirname "${{ github.workspace }}/image-segmentation")
+          cd ${{ github.workspace }}
           python app.py
 
       - name: 'Deploy to Azure Web App'
